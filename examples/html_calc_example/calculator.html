@@ -10,23 +10,11 @@
     <div id="content">
       <script src="jquery/jquery.js"></script> 
       <script src="calculator.js"></script>
-      <script>
-        $(document).ready(function () {
-          $("button").click(function () {
-            try {
-              var result = calculator.parse($("input").val())
-              $("span").html(result);
-            } catch (e) {
-              $("span").html(String(e));
-            }
-          });
-        });
-      </script>
+      <script src="main.js"></script>
       <p>
         <input type="text" value="PI*4^2 + 5" /> <button>equals</button> <span></span>
       </p>
     </div>
-    
   </body>
 </html>
 
