@@ -1,4 +1,4 @@
-Simple example in the client using jison
+Simple example in the client using jison.
 Uses jquery. Be sure you modify "main.js" so
 that "jquery.js" is found.
 
