@@ -1,0 +1,4 @@
+task :default => %w{calculator.jison} do
+  sh "jison calculator.jison"
+end
+

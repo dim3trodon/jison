@@ -1,0 +1,6 @@
+Simple example in the client using jison
+Uses jquery. Be sure you modify "main.js" so
+that "jquery.js" is found.
+
+run "rake" to produce "calculator.js"
+
