@@ -24,7 +24,7 @@
 /lex
 
 /* operator associations and precedence */
-
+%right '='
 %left '+' '-'
 %left '*' '/'
 %left '^'
@@ -32,25 +32,52 @@
 %right '%'
 %left UMINUS
 
+
 %start expressions
 
 %% /* language grammar */
 
+prog
+ : expressions EOF
+ {
+$$ = $1;
+console.log($$);
+return [$$, symbol_table];
+}
+;
+
+
 expressions
-    : e EOF
-        { typeof console !== 'undefined' ? console.log($1) : print($1);
-          return $1; }
+    : s 
+      { $$ = $1? [ $1 ] : []; }
+    | expressions ';' s
+      { $$ = $1; if($3) $$.push($3); console.log($$); }
+}
+    //: e EOF //no está
+      //  { typeof console !== 'undefined' ? console.log($1) : print($1);
+        //  return $1; }
     ;
 
+s 
+		: /* empty */
+		| e
+		;
+
 e
-    : e '+' e
+		: ID = '=' e
+				{ symbol_table[$1] = $$ = $3; } // Hash de símbolos
+    | PI '=' e
+         { throw new Error("Can't assign to constant PI"); }
+    | E '=' e
+         { throw new Error("Can't assign to constant E"); }
+    | e '+' e
         {$$ = $1+$3;}
     | e '-' e
         {$$ = $1-$3;}
     | e '*' e
         {$$ = $1*$3;}
     | e '/' e
-        {$$ = $1/$3;}
+        { $$ = $1/$3; /* if $3 == 0 throw error */ }
     | e '^' e
         {$$ = Math.pow($1, $3);}
     | e '!'
@@ -69,5 +96,8 @@ e
         {$$ = Math.E;}
     | PI
         {$$ = Math.PI;}
+    | ID
+				{$$ = symbol_table[$1];}
+    //Para hacer listas de sentencias mirar la gramática de la práctica anterior
     ;
 
